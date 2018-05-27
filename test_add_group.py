@@ -1,18 +1,10 @@
 import unittest
-
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 class test_add_group(unittest.TestCase):
-
     def setUp(self):
-            self.wd = webdriver.Firefox()
-            self.wd.implicitly_wait(60)
-
-
-    def test_test_add_group(self):
-        success = True
-        wd = self.wd
-        if __name__ == '__main__':
-            wd = self.driver
+      self.wd = WebDriver()
+      self.wd.implicitly_wait(3)
 
 
     def open_home_page(self, wd):
@@ -43,9 +35,9 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys("aaaaa")
-
-
-    def test_test_add_group(self):
+        wd.find_element_by_name("group_header").click()
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").send_keys("aaaav")
         wd.find_element_by_name("group_footer").click()
         wd.find_element_by_name("group_footer").clear()
         wd.find_element_by_name("group_footer").send_keys("aaaab")
@@ -78,4 +70,7 @@ class test_add_group(unittest.TestCase):
 
 
     def tearDown(self):
-        self.wd.quit()
+       self.wd.quit()
+
+if __name__ == '__main__':
+    unittest.main
