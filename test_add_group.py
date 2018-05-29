@@ -1,31 +1,26 @@
-import unittest
+import pytest
+
 from application import Application
 from group import Group
 from group import Group_add
 
+@pytest.fixture
+def app(request):
+    fixture = Application()
+    request.addfinalizer(fixture.destroy)
+    return fixture
 
-class test_add_group(unittest.TestCase):
-    def setUp(self):
-     self.app = Application()
+def test_add_group(app):
+    app.login(username="admin", password="secret")
+    app.create_group(Group(name="aaaaa", header="aaaav", footer="aaaab"))
+    app.logout()
 
-    def test_add_group(self):
-        self.app.login(username="admin", password="secret")
-        self.app.create_group(Group(name="aaaaa", header="aaaav", footer="aaaab"))
-        self.app.logout()
+def test_add_empty_group(app):
+    app.login(username="admin", password="secret")
+    app.create_group(Group(name="", header="", footer=""))
+    app.logout()
 
-    def test_add_empty_group(self):
-        self.app.login(username="admin", password="secret")
-        self.app.create_group(Group(name="", header="", footer=""))
-        self.app.logout()
-
-    def test_add_address_book(self):
-        self.app.login(username="admin", password="secret")
-        self.app.create_add_new(Group_add(firstname='Nikita', middlename='Sergeeyvich', lastname='Vandyshev'))
-        self.app.logout()
-
-
-    def tearDown(self):
-       self.app.destroy()
-
-if __name__ == '__main__':
-    unittest.main
+def test_add_address_book(app):
+    app.login(username="admin", password="secret")
+    app.create_add_new(Group_add(firstname='Nikita', middlename='Sergeeyvich', lastname='Vandyshev'))
+    app.logout()
