@@ -1,6 +1,7 @@
 import unittest
 from selenium.webdriver.firefox.webdriver import WebDriver
 from group import Group
+from group import Group_add
 
 class test_add_group(unittest.TestCase):
     def setUp(self):
@@ -47,6 +48,23 @@ class test_add_group(unittest.TestCase):
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page(wd)
 
+    def create_add_new(self, wd, group):
+        wd.find_element_by_link_text("add new").click()
+        wd.find_element_by_name("firstname").click()
+        wd.find_element_by_name("firstname").clear()
+        wd.find_element_by_name("firstname").send_keys(group.firstname)
+        wd.find_element_by_name("middlename").click()
+        wd.find_element_by_name("middlename").clear()
+        wd.find_element_by_name("middlename").send_keys(group.middlename)
+        wd.find_element_by_name("lastname").click()
+        wd.find_element_by_name("lastname").clear()
+        wd.find_element_by_name("lastname").send_keys(group.lastname)
+        wd.find_element_by_name("submit").click()
+
+
+    def return_to_home_page(self,wd):
+        wd.find_element_by_link_text("home page").click()
+
 
     def return_to_groups_page(self, wd):
         # return group page
@@ -69,6 +87,13 @@ class test_add_group(unittest.TestCase):
         self.login(wd, username="admin", password="secret")
         self.create_group(wd, Group(name="", header="", footer=""))
         self.logout(wd)
+
+    def test_add_address_book(self):
+        wd = self.wd
+        self.login(wd, username="admin", password="secret")
+        self.create_add_new(wd ,Group_add('Nikita','Sergeeyvich','Vandyshev'))
+        self.logout(wd)
+
 
     def tearDown(self):
        self.wd.quit()
