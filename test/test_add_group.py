@@ -1,8 +1,9 @@
 import pytest
 
-from application import Application
-from group import Group
-from group import Group_add
+from fixture.application import Application
+from model.group import Group
+from model.group import Group_add
+
 
 @pytest.fixture
 def app(request):
@@ -11,16 +12,16 @@ def app(request):
     return fixture
 
 def test_add_group(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_group(Group(name="aaaaa", header="aaaav", footer="aaaab"))
-    app.logout()
+    app.session.logout()
 
 def test_add_empty_group(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_group(Group(name="", header="", footer=""))
-    app.logout()
+    app.session.logout()
 
 def test_add_address_book(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_add_new(Group_add(firstname='Nikita', middlename='Sergeeyvich', lastname='Vandyshev'))
-    app.logout()
+    app.session.logout()
