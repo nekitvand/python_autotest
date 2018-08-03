@@ -1,24 +1,28 @@
 
 from model.group import Group
-from model.group import Group_add
+import random
+import string
 
-def test_add_group(app):
+
+
+def random_sring(prefix, maxlen):
+    symbol = string.ascii_letters + string.digits + " "*10
+    return prefix + " ".join ([random.choice(symbol) for 1 in range(random.randrange(maxlen))])
+
+
+
+testdata = [
+    Group(name = random_sring ("name",10 ), header=random_sring ("header",20 ), footer=random_sring ("footer", 20)),
+    Group(name="", header="", footer="")
+]
+
+
+
+@pytest.parametrize("group",testdata,ids=[repr(x) for x in testdata])
+def test_add_group(app,group):
     old_groups = app.group.get_group_list()
-    group = Group(name="aaaaa", header="aaaav", footer="aaaab")
     app.group.create(group)
     assert len(old_groups) + 1 == app.group.count()
     new_groups = app.group.get_group_list()
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-
-#def test_add_empty_group(app):
-#    old_groups = app.group.get_group_list()
-#    group = Group(name="", header="", footer="")
-#    app.group.create(group)
-#    new_groups = app.group.get_group_list()
-#    assert len(old_groups) + 1 == len(new_groups)
-#    old_groups.append(group)
-#    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-
-#def test_add_address_book(app):
- #   app.group.create_add_new(Group_add(firstname='Nikita', middlename='Sergeeyvich', lastname='Vandyshev'))

@@ -10,7 +10,7 @@ class Group:
         self.id = id
 
     def __repr__(self):
-        return "%s:%s" % (self.id, self.name)
+        return "%s:%s:%s:%s" % (self.id, self.name,self.footer,self.header)
 
 
     def __eq__(self, other):
@@ -21,12 +21,4 @@ class Group:
             return int(self.id)
         else:
             return maxsize
-
-
-class Group_add:
-
-    def __init__(self,firstname,middlename,lastname):
-        self.firstname = firstname
-        self.middlename = middlename
-        self.lastname = lastname
 
