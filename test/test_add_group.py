@@ -1,25 +1,7 @@
 
 from model.group import Group
 import pytest
-import random
-import string
-
-
-
-def random_sring(prefix, maxlen):
-    symbol = string.ascii_letters + string.digits + string.punctuation + " "*10
-    return prefix + " ".join([random.choice(symbol) for i in range(random.randrange(maxlen))])
-
-
-
-testdata = [
-    Group(name = name, header=header, footer=footer)
-    for name in ["",random_sring("name",10 )]
-    for header in ["",random_sring("header",20 )]
-    for footer in ["",random_sring("footer", 20)]
-]
-
-
+from data.add_group import constant as testdata
 
 @pytest.mark.parametrize("group",testdata,ids=[repr(x) for x in testdata])
 def test_add_group(app,group):
