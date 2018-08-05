@@ -6,8 +6,8 @@
   },
   "db" : {
     "host": "localhost",
-    "name": "addressbok",
-    "user": "root"
+    "name": "addressbook",
+    "user": "root",
     "password": ""
   }
 
